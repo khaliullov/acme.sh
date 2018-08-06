@@ -60,6 +60,8 @@ _PDD_get_domain() {
     fi
 
     __all_domains="$__all_domains $(echo "$res1" | tr "," "\n" | grep '"name"' | cut -d: -f2 | sed -e 's@"@@g')"
+    __all_domains="$__all_domains $(echo $res1 | jq -r '.domains[].aliases[]')"
+    _debug "all domains: $__all_domains"
 
     __page=$(_math $__page + 1)
   done
